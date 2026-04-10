@@ -17,12 +17,12 @@
       background: #F6F9FC;
       color: #1A2C3E;
       line-height: 1.5;
-      scroll-behavior: smooth;
       margin: 0;
       padding: 0;
     }
     html {
-      scroll-padding-top: 0;
+      scroll-behavior: smooth;
+      scroll-padding-top: 0; /* no extra offset */
     }
     .bg-ambient {
       position: fixed;
@@ -75,6 +75,50 @@
       transition: 0.2s;
     }
     .nav-links a:hover { color: #C49A6C; transform: translateY(-2px); }
+    .hamburger {
+      display: none;
+      font-size: 1.8rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #2C3E50;
+      transition: 0.2s;
+    }
+    .hamburger:hover { color: #C49A6C; }
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      z-index: 200;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+    }
+    .mobile-nav a {
+      font-size: 1.5rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: #2C3E50;
+      transition: 0.2s;
+    }
+    .mobile-nav a:hover { color: #C49A6C; transform: scale(1.05); }
+    .close-nav {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      font-size: 2rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #2C3E50;
+    }
+    .close-nav:hover { color: #C49A6C; }
     .container {
       max-width: 1300px;
       margin: 0 auto;
@@ -333,6 +377,17 @@
       .hero { flex-direction: column-reverse; text-align: center; }
       .hero-tag { text-align: left; }
       .contact-flex { justify-content: center; }
+      .nav-links { display: none; }
+      .hamburger { display: block; }
+      .nav-container { justify-content: space-between; }
+      .mobile-nav.show { display: flex; }
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 1.8rem; }
+      .hero-tag { font-size: 1rem; }
+      .contact-flex { gap: 0.8rem; flex-direction: column; align-items: center; }
+      .contact-flex div { justify-content: center; }
+      .section-title { font-size: 1.6rem; }
     }
   </style>
 </head>
@@ -341,6 +396,7 @@
 <nav class="navbar">
   <div class="nav-container">
     <div class="logo">E.Murugami</div>
+    <button class="hamburger" id="hamburgerBtn"><i class="fas fa-bars"></i></button>
     <ul class="nav-links">
       <li><a href="#home">Home</a></li>
       <li><a href="#about">About</a></li>
@@ -351,6 +407,16 @@
     </ul>
   </div>
 </nav>
+
+<div id="mobileNav" class="mobile-nav">
+  <button class="close-nav" id="closeNavBtn"><i class="fas fa-times"></i></button>
+  <a href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#skills">Skills</a>
+  <a href="#experience">Experience</a>
+  <a href="#education">Education</a>
+  <a href="#contact">Contact</a>
+</div>
 
 <main class="container">
   <section id="home">
@@ -406,11 +472,9 @@
     </div>
   </section>
 
-  <!-- WORK EXPERIENCE -->
   <section id="experience">
     <h2 class="section-title">Work Experience</h2>
     <div class="glass-card" style="padding: 1rem 1.8rem;">
-
       <!-- SpringBoard Capital -->
       <div class="job-entry">
         <div class="job-header"><span class="job-title">ICT Officer</span> <span class="job-company">SpringBoard Capital</span> <span class="job-date">June 2025 – Date</span></div>
@@ -438,7 +502,6 @@
         </div>
         <button class="readmore-btn"><i class="fas fa-chevron-down"></i> Read more (full details)</button>
       </div>
-
       <!-- SoftIQ Technologies -->
       <div class="job-entry">
         <div class="job-header"><span class="job-title">Junior ERP Officer</span> <span class="job-company">SoftIQ Technologies</span> <span class="job-date">Jan 2025 – May 2025</span></div>
@@ -468,7 +531,6 @@
         </div>
         <button class="readmore-btn"><i class="fas fa-chevron-down"></i> Read more (full details)</button>
       </div>
-
       <!-- LVCT Health -->
       <div class="job-entry">
         <div class="job-header"><span class="job-title">ICT Officer</span> <span class="job-company">LVCT Health Dhibiti Project</span> <span class="job-date">Sep 2022 – Dec 2024</span></div>
@@ -497,7 +559,6 @@
         </div>
         <button class="readmore-btn"><i class="fas fa-chevron-down"></i> Read more (full details)</button>
       </div>
-
       <!-- University of Nairobi -->
       <div class="job-entry">
         <div class="job-header"><span class="job-title">ICT Officer</span> <span class="job-company">Univ. of Nairobi - CPRISS Plus Project</span> <span class="job-date">2016 – 2022</span></div>
@@ -530,7 +591,6 @@
         </div>
         <button class="readmore-btn"><i class="fas fa-chevron-down"></i> Read more (full details)</button>
       </div>
-
       <!-- ZUKU -->
       <div class="job-entry">
         <div class="job-header"><span class="job-title">Customer Service Representative</span> <span class="job-company">ZUKU</span> <span class="job-date">Dec 2015 – Apr 2016</span></div>
@@ -542,7 +602,6 @@
           <li><i class="fas fa-circle"></i> Assisting clients with any other issues regarding their accounts.</li>
         </ul>
       </div>
-
       <!-- NEMA Intern -->
       <div class="job-entry">
         <div class="job-header"><span class="job-title">Intern - IT Support</span> <span class="job-company">NEMA</span> <span class="job-date">Apr 2015 – Oct 2015</span></div>
@@ -556,7 +615,6 @@
     </div>
   </section>
 
-  <!-- Education & Certifications -->
   <section id="education">
     <h2 class="section-title">Education & Certifications</h2>
     <div class="two-columns">
@@ -582,7 +640,6 @@
     </div>
   </section>
 
-  <!-- Leadership & Volunteering -->
   <section>
     <h2 class="section-title">Leadership & Volunteering</h2>
     <div class="glass-card">
@@ -596,7 +653,6 @@
     </div>
   </section>
 
-  <!-- Referees -->
   <section>
     <h2 class="section-title">Referees</h2>
     <div class="two-columns">
@@ -614,17 +670,36 @@
         <div><i class="fas fa-mobile-alt"></i> +254 733 426 735</div>
         <div><i class="fas fa-envelope-open-text"></i> evalynemurugami@gmail.com</div>
       </div>
-      <p style="margin: 1rem 0;"><i class="fas fa-bolt"></i> <strong>Immediate availability for interview</strong> : open to senior IT roles, ERP consulting, and cloud infrastructure.</p>
+      <p style="margin: 1rem 0;"><i class="fas fa-bolt"></i> <strong>Immediate availability for interview</strong> — open to senior IT roles, ERP consulting, and cloud infrastructure.</p>
       <a href="mailto:evalynemurugami@gmail.com" class="btn-gold"><i class="fas fa-paper-plane"></i> Send Email</a>
     </div>
   </section>
-  <footer>© 2026 Evalyne Waithira Murugami : Precision. Excellence. Impact.</footer>
+  <footer>© 2026 Evalyne Waithira Murugami — Precision. Excellence. Impact.</footer>
 </main>
 
 <script>
-  // Force scroll to top on page refresh
+  // FORCE SCROLL TO TOP ON PAGE LOAD/REFRESH
   window.addEventListener('load', function() {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    // Also ensure any browser's "restore scroll position" is overridden
+    setTimeout(() => { window.scrollTo({ top: 0, behavior: 'instant' }); }, 10);
+  });
+
+  // When clicking any nav link (including Home), scroll to top smoothly and reset
+  document.querySelectorAll('.nav-links a, .mobile-nav a, .btn-gold[href="#contact"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      if (href === '#home') {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (href && href.startsWith('#')) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
   });
 
   // Scroll reveal for sections
@@ -649,6 +724,18 @@
         }
       }
     });
+  });
+
+  // Mobile menu toggle
+  const hamburger = document.getElementById('hamburgerBtn');
+  const mobileNav = document.getElementById('mobileNav');
+  const closeNav = document.getElementById('closeNavBtn');
+  function openMobileNav() { mobileNav.classList.add('show'); }
+  function closeMobileNav() { mobileNav.classList.remove('show'); }
+  hamburger.addEventListener('click', openMobileNav);
+  closeNav.addEventListener('click', closeMobileNav);
+  document.querySelectorAll('.mobile-nav a').forEach(link => {
+    link.addEventListener('click', closeMobileNav);
   });
 </script>
 </body>
